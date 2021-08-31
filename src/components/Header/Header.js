@@ -20,12 +20,12 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <LinkBox href="/sale">Sale</LinkBox>
+          <LinkBox href="/new">New&nbsp;Releases</LinkBox>
+          <LinkBox href="/men">Men</LinkBox>
+          <LinkBox href="/women">Women</LinkBox>
+          <LinkBox href="/kids">Kids</LinkBox>
+          <LinkBox href="/collections">Collections</LinkBox>
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -51,6 +51,42 @@ const Header = () => {
     </header>
   );
 };
+
+const LinkBoxWrapper = styled.div`
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  will-change: transform;
+
+  & a {
+    transform: translateY(0%);
+    transition: transform 300ms;
+  }
+
+  &:hover a {
+    transform: translateY(-100%);
+    transition: transform 200ms;
+  }
+
+  &:first-of-type a {
+    color: var(--color-secondary);
+  }
+`;
+
+const LinkBox = ({href, children}) => {
+  const shadowStyles = {
+    position: 'absolute',
+    top: '100%',
+    fontWeight: WEIGHTS.bold
+  }
+
+  return <LinkBoxWrapper>
+    <NavLink href={href}>{children}</NavLink>
+    <NavLink style={shadowStyles} href={href}>{children}</NavLink>
+  </LinkBoxWrapper>;
+}
 
 const MainHeader = styled.div`
   display: flex;
@@ -120,10 +156,6 @@ const NavLink = styled.a`
   text-decoration: none;
   color: var(--color-gray-900);
   font-weight: ${WEIGHTS.medium};
-
-  &:first-of-type {
-    color: var(--color-secondary);
-  }
 `;
 
 export default Header;
